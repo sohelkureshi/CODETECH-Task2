@@ -131,3 +131,15 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## License
 
 This project is licensed under the MIT License.
+## screenshots
+![image alt](https://github.com/sohelkureshi/CODETECH-Task2/blob/74a7fadb2375bbd5b485be07a46073ef4d76d5eb/screenshots/1.png)
+![image alt](https://github.com/sohelkureshi/CODETECH-Task2/blob/74a7fadb2375bbd5b485be07a46073ef4d76d5eb/screenshots/2.png)
+![image alt](https://github.com/sohelkureshi/CODETECH-Task2/blob/74a7fadb2375bbd5b485be07a46073ef4d76d5eb/screenshots/3.png)
+![image alt](https://github.com/sohelkureshi/CODETECH-Task2/blob/74a7fadb2375bbd5b485be07a46073ef4d76d5eb/screenshots/4.png)
+![image alt](https://github.com/sohelkureshi/CODETECH-Task2/blob/74a7fadb2375bbd5b485be07a46073ef4d76d5eb/screenshots/5.png)
+
+
+
+
+
+
