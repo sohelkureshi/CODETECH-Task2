@@ -1,4 +1,19 @@
-# Recipe App (MERN Stack)
+## CODETECH-Task2
+
+Name: SOHEL KURESHI
+
+Company: CODTECH IT SOLUTIONS
+
+ID: CT6WDS1639
+
+Domain: FULL STACK
+
+Duration: 6 WEEKS from AUGUST 10th, 2024 to SEPTEMBER 25th, 2024
+
+Mentor:
+
+
+## Recipe App (MERN Stack)
 
 This is a Recipe App built with the MERN stack (MongoDB, Express, React, Node.js) and React Router. It includes functionalities for user authentication, recipe management, and a private component for authenticated users.
 
