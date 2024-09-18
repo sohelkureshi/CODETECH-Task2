@@ -1,58 +1,166 @@
-## CODETECH-Task2
+/*
+The Recipe Sharing project is built using the **MERN stack** (MongoDB, Express, React, Node.js) and involves features like user authentication, recipe sharing, and password management. Here's a detailed breakdown of its architecture and functionality:
 
-Name: SOHEL KURESHI
+### 1. **Project Overview:**
+   - The **Recipe Sharing** app allows users to register, log in, and share their favorite recipes with others. Users can also view, update, or delete their recipes. The app handles user authentication using **JWT (JSON Web Token)**, ensuring only authenticated users can access certain functionalities.
+   - The backend is powered by **Node.js** and **Express.js**, which handle all the API routes and middleware for user and recipe management. The database uses **MongoDB** to store user and recipe data.
+   - Key features include:
+     - User Registration & Login
+     - JWT-based authentication
+     - Recipe sharing & management
+     - Password recovery (Forgot Password functionality)
 
-Company: CODTECH IT SOLUTIONS
+### 2. **Tech Stack:**
+   - **Frontend**: Likely built with React (though not provided in this specific code).
+   - **Backend**: 
+     - **Express.js** for building the REST API.
+     - **MongoDB** for the database (via Mongoose as an ORM).
+     - **JWT** for user authentication.
+     - **bcrypt** for password hashing.
+     - **dotenv** for environment variables management.
+   - **Middleware**: Used for authorization and other route-based security.
 
-ID: CT6WDS1639
+### 3. **Main Functionalities and Code Breakdown:**
 
-Domain: FULL STACK
+#### a) **User Authentication (Login & Registration):**
+   - The routes `LoginRoute.js` and `RegisterRoute.js` handle the **user login** and **registration** respectively.
+   - **`bcrypt`** is used to hash passwords, ensuring secure password storage.
+   - **JWT** tokens are created upon successful login or registration, and the tokens are sent back to the client. These tokens are later used for **authentication** and **authorization** (with the help of middleware `verifyToken`).
 
-Duration: 6 WEEKS from AUGUST 10th, 2024 to SEPTEMBER 25th, 2024
+#### Example: User Registration Route
+- The `RegisterRoute` might handle user registration, where it hashes the user's password using `bcrypt`, saves the user to the MongoDB database, and sends back a JWT token for the session.
 
-Mentor:
+#### b) **Recipe Management:**
+   - The `RecipeRoute.js` allows users to create, view, edit, and delete recipes.
+   - Only **authenticated users** can access these routes, thanks to the **JWT authentication** middleware (`verifyToken.js`).
 
-## Project Overview
+#### Example: Recipe Route
+- Routes like `POST /auth/recipes` will allow authenticated users to post new recipes, while `GET /auth/recipes` will retrieve the list of all recipes.
 
-### Project Title
-Recipe App
+#### c) **JWT Authentication:**
+   - **JWT (JSON Web Token)** is used to verify the authenticity of users. The `verifyToken.js` middleware ensures that only users with a valid token can access protected routes like viewing and managing recipes.
+   - The token is included in the request's headers and verified on the server side.
 
-### Project Summary
-The Recipe App is a web application built with the MERN stack (MongoDB, Express, React, Node.js). It includes functionalities for user authentication, recipe management, and a private component for authenticated users. Users can register, log in, reset their passwords, view recipes, add new recipes, and like recipes.
+#### d) **Forgot Password:**
+   - The `ForgotPassword.js` route handles password recovery. Users can request a password reset link or token to be sent to their email. After verification, they can reset their password.
 
-### Objectives
-- Develop a full-stack web application using the MERN stack.
-- Implement user authentication (registration, login, and password reset).
-- Create protected routes accessible only to authenticated users.
-- Provide functionalities for viewing, adding, and liking recipes.
-- Ensure a responsive and user-friendly interface.
+### 4. **Environment Variables:**
+   - The project uses **dotenv** to load environment variables from a `.env` file. These variables likely include sensitive data such as the JWT secret key, MongoDB connection URI, and other configurations.
 
-### Scope
-- **Frontend**: Build the user interface using React and React Router.
-- **Backend**: Develop the server-side using Node.js and Express.
-- **Database**: Use MongoDB for storing user and recipe data.
-- **Authentication**: Implement JWT-based authentication.
-- **Protected Routes**: Ensure certain routes are accessible only to logged-in users.
-- **CRUD Operations**: Implement Create, Read, Update, and Delete functionalities for recipes.
+   Example `.env` file:
+   ```bash
+   PORT=8000
+   JWT_SECRET=mysecretkey
+   MONGO_URI=mongodb://localhost:27017/recipeDB
+   ```
 
-### Timeline
-- **Week 1-2**: Set up project structure, initialize backend and frontend, and configure MongoDB.
-- **Week 3**: Implement user authentication (registration, login, and password reset).
-- **Week 4**: Develop recipe management features (viewing and adding recipes).
-- **Week 5**: Implement liking functionality and protected routes.
-- **Week 6**: Testing, bug fixing, and final project deployment.
+### 5. **Folder Structure (Backend):**
+   Here's an outline of how the backend might be structured based on the imports:
 
-### Budget
-This project doesn't have a specified budget as it is assumed to be a development exercise or a small-scale project. If applicable, costs would include:
-- **Development Tools:** Cost of any paid libraries or tools.
-- **Hosting:** Expenses for hosting the application on a server.
-- **Maintenance:** Potential costs for future updates and maintenance.
+   - **db/config.js**: Handles the connection to the MongoDB database using Mongoose.
+   - **controllers/controller.js**: Contains the main logic for handling home routes or other general routes.
+   - **routes/LoginRoute.js**: Handles user login logic (verifying user credentials and generating JWT tokens).
+   - **routes/RegisterRoute.js**: Handles user registration logic (saving user data to MongoDB).
+   - **routes/RecipeRoute.js**: Handles CRUD operations for recipes (create, read, update, delete).
+   - **routes/forgotPassword.js**: Manages password recovery processes.
+   - **Middleware/middleware.js**: Contains middleware for verifying JWT tokens.
 
-### Team
-- **Myself:** [Sohel Kureshi]
+### 6. **API Endpoints:**
 
-### Success Criteria
-- The application should have a fully functional user authentication system.
-- Users should be able to view, add, and like recipes.
-- Protected routes should ensure only authenticated users can access certain features.
-- The project completed within the 6-week timeline.
+The app provides various API endpoints for authentication and recipe management. Here's a sample:
+
+| Method | Endpoint             | Description                          |
+|--------|----------------------|--------------------------------------|
+| POST   | `/auth/register`      | Register a new user                  |
+| POST   | `/auth/login`         | Log in a user                        |
+| POST   | `/auth/recipes`       | Create a new recipe                  |
+| GET    | `/auth/recipes`       | Get a list of all recipes            |
+| PUT    | `/auth/recipes/:id`   | Update an existing recipe            |
+| DELETE | `/auth/recipes/:id`   | Delete a recipe                      |
+| POST   | `/auth/forgot-password`| Request password reset               |
+
+### 7. **Middleware:**
+   - **verifyToken.js**: This middleware checks for a valid JWT token in the request headers. If valid, the user can proceed with their request (e.g., creating or editing a recipe). If not, the request is denied.
+
+### Conclusion:
+This project provides a user-friendly platform for recipe sharing with a robust authentication system. The JWT-based security ensures only authenticated users can access and manage recipes. The backend is well-structured, using Express.js for API routes and MongoDB as the database.
+*/
+// import express from "express";
+// const app = express();
+// const cors = require("cors");
+// const bcrypt = require("bcrypt");
+// const jwt = require("jsonwebtoken");
+// const dotenv = require("dotenv");
+// dotenv.config();
+// const router = express.Router();
+
+// app.use(express.json());
+// app.use(cors());
+
+// const config = require("./db/config");
+// const Home = require("./controllers/controller");
+// const LoginRoute = require("./routes/LoginRoute");
+// const RegisterRoute = require("./routes/RegisterRoute");
+// const verifyToken = require("./Middleware/middleware");
+// const RecipeRoute = require("./routes/RecipeRoute");
+// const ForgotPassword = require("./routes/forgotPassword");
+
+// app.use("/auth", LoginRoute);
+// app.use("/auth", RegisterRoute);
+// app.use("/auth", RecipeRoute);
+// app.use("/auth", router);
+// app.use("/auth", ForgotPassword);
+
+// router.get("/", verifyToken, Home.Home);
+
+// module.exports = router;
+
+// const PORT = 8000;
+
+// app.listen(PORT, () => {
+//   console.log(`Server started on port ${PORT}`);
+// });
+
+
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+dotenv.config();
+
+const app = express();
+const router = express.Router();
+
+// Middleware
+app.use(express.json());
+app.use(cors());
+
+// Utility for __dirname equivalent in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Import routes and middleware
+import config from "./db/config.js";
+import * as Home from "./controllers/controller.js";
+import LoginRoute from "./routes/LoginRoute.js";
+import RegisterRoute from "./routes/RegisterRoute.js";
+import verifyToken from "./Middleware/middleware.js";
+import RecipeRoute from "./routes/RecipeRoute.js";
+import ForgotPassword from "./routes/forgotPassword.js";
+
+// Routes
+app.use("/auth", LoginRoute);
+app.use("/auth", RegisterRoute);
+app.use("/auth", RecipeRoute);
+app.use("/auth", router);
+app.use("/auth", ForgotPassword);
+
+router.get("/", verifyToken, Home.Home);
+
+const PORT = 8000;
+
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
+});
